@@ -2,15 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
 <meta name="theme-color" content="#0f172a">
 
 <title>Money Rush | Simplify Finance</title>
 
 <style>
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  touch-action: manipulation;
 }
 
 body {
@@ -18,131 +29,194 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   background: #f4f7fb;
   color: #172033;
+  overscroll-behavior: none;
 }
 
 .page {
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
-  padding: 18px 14px 30px;
+  padding: 14px 12px 24px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .logo {
-  font-size: 25px;
+  font-size: 24px;
   font-weight: 800;
 }
 
 .subtitle {
   color: #64748b;
-  font-size: 14px;
-  margin-top: 3px;
+  font-size: 13px;
+  margin-top: 2px;
 }
 
 .sound {
   border: 1px solid #d7deea;
   background: white;
   border-radius: 12px;
-  padding: 11px;
-  font-size: 15px;
+  min-width: 48px;
+  min-height: 46px;
+  font-size: 19px;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .stat {
   background: white;
   border: 1px solid #dfe5ee;
   border-radius: 14px;
-  padding: 8px;
+  padding: 7px;
   text-align: center;
 }
 
 .label {
   color: #64748b;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
 }
 
 .value {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 800;
   margin-top: 2px;
 }
 
+
+/* GAME AREA */
+
 #arena {
-  height: 440px;
+  height: 510px;
+
   background:
-    linear-gradient(#dff4ff 0%, #eef9ff 62%, #e9eef4 62%, #d7dde5 100%);
+    linear-gradient(
+      #dff4ff 0%,
+      #eef9ff 62%,
+      #e9eef4 62%,
+      #d7dde5 100%
+    );
+
   border: 1px solid #d6dee8;
   border-radius: 20px;
+
   overflow: hidden;
+
   position: relative;
-  touch-action: manipulation;
+
+  /*
+  Critical for mobile gameplay:
+  finger gestures inside the arena belong to the game,
+  not browser scrolling/zooming.
+  */
+  touch-action: none;
+
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .road-line {
   position: absolute;
+
   bottom: 0;
   left: 50%;
+
   width: 8px;
-  height: 150px;
+  height: 190px;
+
   opacity: .55;
-  background: repeating-linear-gradient(
-    to bottom,
-    white 0,
-    white 24px,
-    transparent 24px,
-    transparent 48px
-  );
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      white 0,
+      white 24px,
+      transparent 24px,
+      transparent 48px
+    );
 }
+
+
+/* TAXI */
 
 #player {
   position: absolute;
-  bottom: 15px;
-  left: calc(50% - 26px);
-  width: 52px;
+
+  bottom: 16px;
+
+  left: calc(50% - 27px);
+
+  width: 54px;
+
   text-align: center;
-  font-size: 42px;
+
+  font-size: 44px;
+
   z-index: 5;
-  transition: left .08s ease-out;
+
   user-select: none;
+  pointer-events: none;
+
+  will-change: left;
 }
+
+
+/* FALLING OBJECTS */
 
 .drop {
   position: absolute;
-  top: -48px;
+
+  top: -50px;
+
   width: 46px;
   height: 46px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   font-size: 32px;
+
   user-select: none;
+  pointer-events: none;
+
   will-change: transform;
 }
 
+
+/* START / END SCREEN */
+
 .overlay {
   position: absolute;
+
   inset: 0;
+
   background: rgba(248,250,252,.96);
+
   z-index: 20;
+
   display: flex;
+
   justify-content: center;
   align-items: center;
+
   padding: 28px;
+
   text-align: center;
+
+  touch-action: manipulation;
 }
 
 .hidden {
@@ -161,55 +235,57 @@ h1 {
 
 .instructions {
   color: #64748b;
+
   line-height: 1.5;
+
   font-size: 15px;
 }
 
 .primary {
   border: 0;
+
   background: #2563eb;
+
   color: white;
+
   padding: 15px 27px;
+
   border-radius: 14px;
+
   font-weight: 800;
+
   font-size: 17px;
+
   cursor: pointer;
-  min-width: 160px;
+
+  min-width: 170px;
+
   margin-top: 10px;
+
+  min-height: 52px;
+
+  touch-action: manipulation;
 }
 
-.controls {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 11px;
-}
 
-.control {
-  min-height: 60px;
-  border: 1px solid #d7deea;
-  border-radius: 15px;
-  background: white;
-  font-size: 17px;
-  font-weight: 800;
-  color: #1e293b;
-  cursor: pointer;
-}
-
-.control:active {
-  background: #e8eef7;
-  transform: scale(.98);
-}
+/* SCORE POPUP */
 
 #flash {
   position: absolute;
+
   top: 80px;
+
   left: 0;
   right: 0;
+
   text-align: center;
-  font-size: 26px;
+
+  font-size: 27px;
+
   font-weight: 900;
+
   z-index: 10;
+
   pointer-events: none;
 }
 
@@ -218,259 +294,547 @@ h1 {
 }
 
 @keyframes pop {
+
   0% {
     opacity: 0;
     transform: scale(.7);
   }
+
   25% {
     opacity: 1;
     transform: scale(1.2);
   }
+
   100% {
     opacity: 0;
     transform: translateY(-30px);
   }
+
 }
+
+
+/* DRAG INSTRUCTION */
+
+.drag-tip {
+  text-align: center;
+
+  margin-top: 10px;
+
+  color: #475569;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.drag-tip span {
+  display: inline-block;
+
+  background: white;
+
+  border: 1px solid #dfe5ee;
+
+  border-radius: 20px;
+
+  padding: 7px 14px;
+}
+
+
+/* END SCREEN */
 
 .final-score {
   font-size: 42px;
+
   font-weight: 900;
+
   margin: 10px 0;
 }
 
 .brand {
   text-align: center;
+
   color: #94a3b8;
+
   font-size: 12px;
-  margin-top: 15px;
+
+  margin-top: 12px;
 }
 
-.tip {
-  text-align: center;
-  color: #64748b;
-  font-size: 12px;
-  margin-top: 8px;
-}
 
-@media (max-width: 400px) {
-  .page {
-    padding: 12px 10px 25px;
-  }
+/* SMALL PHONES */
+
+@media (max-height: 720px) {
 
   #arena {
-    height: 410px;
+    height: 430px;
+  }
+
+  .page {
+    padding-top: 8px;
   }
 
   .logo {
-    font-size: 22px;
+    font-size: 21px;
   }
+
 }
+
+
+@media (max-width: 380px) {
+
+  .page {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .logo {
+    font-size: 21px;
+  }
+
+  #arena {
+    height: 455px;
+  }
+
+}
+
 </style>
 </head>
+
 
 <body>
 
 <div class="page">
 
+
+  <!-- HEADER -->
+
   <div class="header">
+
     <div>
-      <div class="logo">💰 Money Rush</div>
-      <div class="subtitle">Catch the money. Dodge the bills.</div>
+
+      <div class="logo">
+        💰 Money Rush
+      </div>
+
+      <div class="subtitle">
+        Catch the money. Dodge the bills.
+      </div>
+
     </div>
 
-    <button id="soundBtn" class="sound">🔊</button>
+
+    <button
+      id="soundBtn"
+      class="sound"
+      type="button"
+      aria-label="Toggle sound">
+      🔊
+    </button>
+
   </div>
+
+
+
+  <!-- SCORE -->
 
   <div class="stats">
 
     <div class="stat">
-      <div class="label">SCORE</div>
-      <div id="score" class="value">$0</div>
+
+      <div class="label">
+        SCORE
+      </div>
+
+      <div id="score" class="value">
+        $0
+      </div>
+
     </div>
 
-    <div class="stat">
-      <div class="label">TIME</div>
-      <div id="time" class="value">60</div>
-    </div>
 
     <div class="stat">
-      <div class="label">BEST</div>
-      <div id="best" class="value">$0</div>
+
+      <div class="label">
+        TIME
+      </div>
+
+      <div id="time" class="value">
+        60
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="label">
+        BEST
+      </div>
+
+      <div id="best" class="value">
+        $0
+      </div>
+
     </div>
 
   </div>
+
+
+
+  <!-- GAME -->
 
   <div id="arena">
 
     <div class="road-line"></div>
 
-    <div id="player">🚕</div>
+
+    <div id="player">
+      🚕
+    </div>
+
 
     <div id="flash"></div>
+
+
+
+    <!-- START -->
 
     <div id="intro" class="overlay">
 
       <div>
-        <div class="bigemoji">🚕💵</div>
 
-        <h1>Got 60 seconds?</h1>
+        <div class="bigemoji">
+          🚕💵
+        </div>
+
+
+        <h1>
+          Got 60 seconds?
+        </h1>
+
 
         <p class="instructions">
-          Catch 💵 💰 💎 🪙 to earn money.<br>
-          Avoid 🧾 and 💸.<br><br>
+
+          Catch
+          💵 💰 💎 🪙
+          to earn money.
+
+          <br>
+
+          Avoid
+          🧾 and 💸.
+
+          <br><br>
+
+          <strong>
+            👆 Drag your finger left & right
+            to steer the taxi.
+          </strong>
+
+          <br><br>
+
           Things get faster as the clock runs down!
+
         </p>
 
-        <button id="startBtn" class="primary">
+
+        <button
+          id="startBtn"
+          class="primary"
+          type="button">
+
           START GAME
+
         </button>
 
       </div>
 
     </div>
+
+
+
+    <!-- END -->
 
     <div id="end" class="overlay hidden">
 
       <div>
 
-        <div id="endEmoji" class="bigemoji">🏆</div>
 
-        <h1 id="endTitle">
-          Money Master!
-        </h1>
+        <div
+          id="endEmoji"
+          class="bigemoji">
 
-        <div id="finalScore" class="final-score">
-          $0
+          🏆
+
         </div>
 
-        <p id="endMessage" class="instructions">
+
+        <h1 id="endTitle">
+
+          Money Master!
+
+        </h1>
+
+
+        <div
+          id="finalScore"
+          class="final-score">
+
+          $0
+
+        </div>
+
+
+        <p
+          id="endMessage"
+          class="instructions">
+
           Nice run!
+
         </p>
 
-        <button id="againBtn" class="primary">
+
+        <button
+          id="againBtn"
+          class="primary"
+          type="button">
+
           PLAY AGAIN
+
         </button>
+
 
       </div>
 
     </div>
 
-  </div>
-
-  <div class="controls">
-
-    <button id="leftBtn" class="control">
-      ◀ MOVE
-    </button>
-
-    <button id="rightBtn" class="control">
-      MOVE ▶
-    </button>
 
   </div>
 
-  <div class="tip">
-    You can also tap the left or right side of the game.
+
+
+  <div class="drag-tip">
+
+    <span>
+      👆 Drag anywhere on the road to steer
+    </span>
+
   </div>
+
 
   <div class="brand">
-    A little ride-time fun from <strong>Simplify Finance</strong>
+
+    A little ride-time fun from
+    <strong>Simplify Finance</strong>
+
   </div>
+
 
 </div>
 
+
+
 <script>
 
-const arena = document.getElementById("arena");
-const player = document.getElementById("player");
+/* ==============================
+   MONEY RUSH
+   ============================== */
 
-const scoreDisplay = document.getElementById("score");
-const timeDisplay = document.getElementById("time");
-const bestDisplay = document.getElementById("best");
 
-const intro = document.getElementById("intro");
-const endScreen = document.getElementById("end");
+const arena =
+  document.getElementById("arena");
 
-const flash = document.getElementById("flash");
+
+const player =
+  document.getElementById("player");
+
+
+const scoreDisplay =
+  document.getElementById("score");
+
+
+const timeDisplay =
+  document.getElementById("time");
+
+
+const bestDisplay =
+  document.getElementById("best");
+
+
+const intro =
+  document.getElementById("intro");
+
+
+const endScreen =
+  document.getElementById("end");
+
+
+const flash =
+  document.getElementById("flash");
+
+
 
 let score = 0;
+
 let timeLeft = 60;
+
 let running = false;
+
 
 let playerX = 0.5;
 
+
 let objects = [];
 
-let animationFrame;
-let timer;
+
+let animationFrame = null;
+
+let timer = null;
+
 
 let lastFrame = 0;
+
 let lastSpawn = 0;
+
 
 let soundEnabled = true;
 
-let bestScore =
-  Number(localStorage.getItem("moneyRushBest") || 0);
 
-bestDisplay.textContent = "$" + bestScore.toLocaleString();
+/*
+Best score remains on this passenger's
+phone/browser.
+*/
 
+let bestScore = 0;
+
+try {
+
+  bestScore =
+    Number(
+      localStorage.getItem(
+        "moneyRushBest"
+      ) || 0
+    );
+
+}
+catch(e) {
+
+  bestScore = 0;
+
+}
+
+
+bestDisplay.textContent =
+  "$" + bestScore.toLocaleString();
+
+
+
+/* OBJECT TYPES */
 
 const objectTypes = [
 
-  { emoji:"💵", value:100, weight:32 },
+  {
+    emoji: "💵",
+    value: 100,
+    weight: 32
+  },
 
-  { emoji:"💰", value:150, weight:24 },
+  {
+    emoji: "💰",
+    value: 150,
+    weight: 24
+  },
 
-  { emoji:"🪙", value:50, weight:20 },
+  {
+    emoji: "🪙",
+    value: 50,
+    weight: 20
+  },
 
-  { emoji:"💎", value:300, weight:8 },
+  {
+    emoji: "💎",
+    value: 300,
+    weight: 8
+  },
 
-  { emoji:"🧾", value:-150, weight:10 },
+  {
+    emoji: "🧾",
+    value: -150,
+    weight: 10
+  },
 
-  { emoji:"💸", value:-250, weight:6 }
+  {
+    emoji: "💸",
+    value: -250,
+    weight: 6
+  }
 
 ];
 
 
-function chooseObject(){
 
-  let random = Math.random() * 100;
+function chooseObject() {
+
+  let random =
+    Math.random() * 100;
+
 
   let total = 0;
 
-  for(const item of objectTypes){
 
-    total += item.weight;
+  for(
+    const item
+    of objectTypes
+  ) {
 
-    if(random < total){
+    total +=
+      item.weight;
+
+
+    if(
+      random < total
+    ) {
+
       return item;
+
     }
 
   }
+
 
   return objectTypes[0];
 
 }
 
 
-function formatMoney(value){
 
-  if(value < 0){
-    return "-$" + Math.abs(value).toLocaleString();
+function formatMoney(value) {
+
+  if(value < 0) {
+
+    return "-$" +
+      Math.abs(value)
+        .toLocaleString();
+
   }
 
-  return "$" + value.toLocaleString();
+
+  return "$" +
+    value.toLocaleString();
 
 }
 
 
-function updateStats(){
+
+function updateStats() {
 
   scoreDisplay.textContent =
     formatMoney(score);
 
+
   timeDisplay.textContent =
     timeLeft;
+
 
   bestDisplay.textContent =
     formatMoney(bestScore);
@@ -478,65 +842,238 @@ function updateStats(){
 }
 
 
-function movePlayer(direction){
 
-  if(!running) return;
+/* ==============================
+   TOUCH STEERING
+   ============================== */
 
-  playerX += direction * 0.13;
+
+/*
+Convert the passenger's finger
+position to a position between
+0 and 1 across the game.
+*/
+
+function steerTo(clientX) {
+
+  if(!running) {
+    return;
+  }
+
+
+  const bounds =
+    arena.getBoundingClientRect();
+
+
+  let position =
+    (
+      clientX -
+      bounds.left
+    )
+    /
+    bounds.width;
+
+
+  /*
+  Keep taxi away from
+  extreme edges.
+  */
+
+  position =
+    Math.max(
+      0.065,
+      Math.min(
+        0.935,
+        position
+      )
+    );
+
 
   playerX =
-    Math.max(0.07,
-      Math.min(0.93, playerX));
+    position;
+
 
   player.style.left =
-    `calc(${playerX*100}% - 26px)`;
+    `calc(${playerX * 100}% - 27px)`;
 
 }
 
 
-function createObject(){
 
-  const type = chooseObject();
+/*
+Pointer Events work with:
+
+- fingers
+- stylus
+- mouse
+
+so we don't need separate
+touch and mouse code.
+*/
+
+
+let pointerActive = false;
+
+
+arena.addEventListener(
+  "pointerdown",
+  event => {
+
+    if(!running) {
+      return;
+    }
+
+
+    pointerActive = true;
+
+
+    try {
+
+      arena.setPointerCapture(
+        event.pointerId
+      );
+
+    }
+    catch(e) {}
+
+
+    steerTo(
+      event.clientX
+    );
+
+
+    event.preventDefault();
+
+  }
+);
+
+
+
+arena.addEventListener(
+  "pointermove",
+  event => {
+
+    if(
+      !running ||
+      !pointerActive
+    ) {
+
+      return;
+
+    }
+
+
+    steerTo(
+      event.clientX
+    );
+
+
+    event.preventDefault();
+
+  }
+);
+
+
+
+function endPointer(event) {
+
+  pointerActive = false;
+
+
+  try {
+
+    arena.releasePointerCapture(
+      event.pointerId
+    );
+
+  }
+  catch(e) {}
+
+}
+
+
+arena.addEventListener(
+  "pointerup",
+  endPointer
+);
+
+
+arena.addEventListener(
+  "pointercancel",
+  endPointer
+);
+
+
+
+/* ==============================
+   FALLING OBJECTS
+   ============================== */
+
+
+function createObject() {
+
+  const type =
+    chooseObject();
+
 
   const element =
     document.createElement("div");
 
-  element.className = "drop";
+
+  element.className =
+    "drop";
+
 
   element.textContent =
     type.emoji;
 
+
   const x =
-    0.06 + Math.random()*0.88;
+    0.06 +
+    Math.random() * 0.88;
+
 
   element.style.left =
-    `calc(${x*100}% - 23px)`;
+    `calc(${x * 100}% - 23px)`;
 
-  arena.appendChild(element);
+
+  arena.appendChild(
+    element
+  );
+
 
   objects.push({
 
-    element,
+    element: element,
 
-    x,
+    x: x,
 
-    y:-50,
+    y: -50,
 
-    value:type.value,
+    value: type.value,
 
     speed:
       125 +
-      Math.random()*55 +
-      (60-timeLeft)*2.2
+      Math.random() * 55 +
+      (60 - timeLeft) * 2.2
 
   });
 
 }
 
 
-function playSound(good){
 
-  if(!soundEnabled) return;
+/* ==============================
+   SOUND
+   ============================== */
+
+
+function playSound(good) {
+
+  if(!soundEnabled) {
+    return;
+  }
+
 
   try {
 
@@ -544,69 +1081,118 @@ function playSound(good){
       window.AudioContext ||
       window.webkitAudioContext;
 
-    if(!AudioContext) return;
+
+    if(!AudioContext) {
+      return;
+    }
+
 
     const context =
       new AudioContext();
 
+
     const oscillator =
       context.createOscillator();
+
 
     const gain =
       context.createGain();
 
-    oscillator.connect(gain);
+
+    oscillator.connect(
+      gain
+    );
+
 
     gain.connect(
       context.destination
     );
 
-    oscillator.frequency.value =
-      good ? 650 : 180;
 
-    gain.gain.value = 0.04;
+    oscillator.frequency.value =
+      good
+      ? 650
+      : 180;
+
+
+    gain.gain.value =
+      0.04;
+
 
     oscillator.start();
 
+
     oscillator.stop(
-      context.currentTime + 0.07
+      context.currentTime +
+      0.07
     );
 
-  } catch(e){}
+  }
+  catch(e) {}
 
 }
 
 
-function collect(object){
 
-  score += object.value;
+/* ==============================
+   COLLECTION
+   ============================== */
 
-  if(score < 0)
+
+function collect(object) {
+
+  score +=
+    object.value;
+
+
+  if(score < 0) {
+
     score = 0;
 
+  }
 
-  if(score > bestScore){
 
-    bestScore = score;
+  if(
+    score >
+    bestScore
+  ) {
 
-    localStorage.setItem(
-      "moneyRushBest",
-      bestScore
-    );
+    bestScore =
+      score;
+
+
+    try {
+
+      localStorage.setItem(
+        "moneyRushBest",
+        bestScore
+      );
+
+    }
+    catch(e) {}
 
   }
 
 
   flash.textContent =
-    (object.value > 0 ? "+" : "")
-    + formatMoney(object.value);
+    (
+      object.value > 0
+      ? "+"
+      : ""
+    )
+    +
+    formatMoney(
+      object.value
+    );
 
 
   flash.classList.remove(
     "flashAnimation"
   );
 
+
   void flash.offsetWidth;
+
 
   flash.classList.add(
     "flashAnimation"
@@ -620,9 +1206,11 @@ function collect(object){
 
   object.element.remove();
 
+
   objects =
     objects.filter(
-      o => o !== object
+      item =>
+        item !== object
     );
 
 
@@ -631,82 +1219,159 @@ function collect(object){
 }
 
 
-function gameLoop(timestamp){
 
-  if(!running) return;
+/* ==============================
+   GAME LOOP
+   ============================== */
+
+
+function gameLoop(timestamp) {
+
+  if(!running) {
+    return;
+  }
 
 
   const delta =
     Math.min(
+
       0.032,
-      (timestamp-lastFrame)/1000 || 0
+
+      (
+        timestamp -
+        lastFrame
+      )
+      /
+      1000
+      ||
+      0
+
     );
 
 
-  lastFrame = timestamp;
+  lastFrame =
+    timestamp;
 
+
+
+  /*
+  Objects spawn faster
+  later in the game.
+  */
 
   const spawnRate =
     Math.max(
+
       320,
-      850-(60-timeLeft)*8
+
+      850 -
+      (60 - timeLeft) * 8
+
     );
 
 
-  if(timestamp-lastSpawn > spawnRate){
+
+  if(
+    timestamp -
+    lastSpawn >
+    spawnRate
+  ) {
 
     createObject();
 
-    lastSpawn = timestamp;
+
+    lastSpawn =
+      timestamp;
 
   }
+
 
 
   const arenaHeight =
     arena.clientHeight;
 
 
-  for(const object of [...objects]){
+
+  for(
+    const object
+    of [...objects]
+  ) {
+
 
     object.y +=
-      object.speed * delta;
+      object.speed *
+      delta;
 
 
     object.element.style.transform =
       `translateY(${object.y}px)`;
 
 
-    const playerY =
-      arenaHeight - 78;
 
+    const playerY =
+      arenaHeight - 80;
+
+
+
+    /*
+    Collision detection
+    */
 
     if(
-      object.y + 40 > playerY &&
-      object.y < playerY + 55 &&
-      Math.abs(
-        object.x-playerX
-      ) < 0.11
-    ){
 
-      collect(object);
+      object.y + 40 >
+      playerY
+
+      &&
+
+      object.y <
+      playerY + 58
+
+      &&
+
+      Math.abs(
+        object.x -
+        playerX
+      )
+      <
+      0.105
+
+    ) {
+
+      collect(
+        object
+      );
+
 
       continue;
 
     }
 
 
-    if(object.y > arenaHeight+30){
+
+    /*
+    Remove objects once
+    they leave the screen.
+    */
+
+    if(
+      object.y >
+      arenaHeight + 30
+    ) {
 
       object.element.remove();
 
+
       objects =
         objects.filter(
-          o => o !== object
+          item =>
+            item !== object
         );
 
     }
 
   }
+
 
 
   animationFrame =
@@ -717,38 +1382,75 @@ function gameLoop(timestamp){
 }
 
 
-function clearGame(){
 
-  objects.forEach(
-    o => o.element.remove()
-  );
+/* ==============================
+   START / STOP
+   ============================== */
+
+
+function clearGame() {
+
+  for(
+    const object
+    of objects
+  ) {
+
+    object.element.remove();
+
+  }
+
 
   objects = [];
 
 
-  clearInterval(timer);
+  if(timer !== null) {
 
-  cancelAnimationFrame(
-    animationFrame
-  );
+    clearInterval(
+      timer
+    );
+
+    timer = null;
+
+  }
+
+
+  if(
+    animationFrame !== null
+  ) {
+
+    cancelAnimationFrame(
+      animationFrame
+    );
+
+    animationFrame =
+      null;
+
+  }
 
 }
 
 
-function startGame(){
+
+function startGame() {
 
   clearGame();
 
 
   score = 0;
 
+
   timeLeft = 60;
+
 
   playerX = 0.5;
 
 
+  pointerActive =
+    false;
+
+
   player.style.left =
-    "calc(50% - 26px)";
+    "calc(50% - 27px)";
 
 
   intro.classList.add(
@@ -761,33 +1463,44 @@ function startGame(){
   );
 
 
-  running = true;
+  running =
+    true;
 
 
   lastFrame =
     performance.now();
 
 
-  lastSpawn = 0;
+  lastSpawn =
+    lastFrame;
 
 
   updateStats();
 
 
+
   timer =
-    setInterval(()=>{
+    setInterval(
+      () => {
 
-      timeLeft--;
+        timeLeft--;
 
-      updateStats();
 
-      if(timeLeft <= 0){
+        updateStats();
 
-        finishGame();
 
-      }
+        if(
+          timeLeft <= 0
+        ) {
 
-    },1000);
+          finishGame();
+
+        }
+
+      },
+      1000
+    );
+
 
 
   animationFrame =
@@ -798,78 +1511,114 @@ function startGame(){
 }
 
 
-function finishGame(){
 
-  if(!running) return;
+function finishGame() {
+
+  if(!running) {
+    return;
+  }
 
 
-  running = false;
+  running =
+    false;
 
 
   clearGame();
 
 
-  if(score > bestScore){
 
-    bestScore = score;
+  if(
+    score >
+    bestScore
+  ) {
 
-    localStorage.setItem(
-      "moneyRushBest",
-      bestScore
-    );
+    bestScore =
+      score;
+
+
+    try {
+
+      localStorage.setItem(
+        "moneyRushBest",
+        bestScore
+      );
+
+    }
+    catch(e) {}
 
   }
+
 
 
   document.getElementById(
     "finalScore"
   ).textContent =
-    formatMoney(score);
+    formatMoney(
+      score
+    );
+
 
 
   let title =
     "Nice Run!";
 
+
   let emoji =
     "👏";
+
 
   let message =
     "Try again and beat your score!";
 
 
-  if(score >= 5000){
+
+  if(
+    score >= 5000
+  ) {
 
     title =
       "Money Master!";
 
+
     emoji =
       "🏆";
+
 
     message =
       "That was seriously fast!";
 
   }
 
-  else if(score >= 3000){
+
+  else if(
+    score >= 3000
+  ) {
 
     title =
       "Cash Collector!";
 
+
     emoji =
       "💰";
+
 
     message =
       "Can you break $5,000?";
 
   }
 
-  else if(score >= 1500){
+
+  else if(
+    score >= 1500
+  ) {
 
     title =
       "Smart Saver!";
 
+
     emoji =
       "😎";
+
 
     message =
       "Nice! Go again for a bigger score.";
@@ -877,19 +1626,23 @@ function finishGame(){
   }
 
 
+
   document.getElementById(
     "endTitle"
-  ).textContent = title;
+  ).textContent =
+    title;
 
 
   document.getElementById(
     "endEmoji"
-  ).textContent = emoji;
+  ).textContent =
+    emoji;
 
 
   document.getElementById(
     "endMessage"
-  ).textContent = message;
+  ).textContent =
+    message;
 
 
   endScreen.classList.remove(
@@ -902,12 +1655,19 @@ function finishGame(){
 }
 
 
+
+/* ==============================
+   BUTTONS
+   ============================== */
+
+
 document.getElementById(
   "startBtn"
 ).addEventListener(
   "click",
   startGame
 );
+
 
 
 document.getElementById(
@@ -918,58 +1678,12 @@ document.getElementById(
 );
 
 
-document.getElementById(
-  "leftBtn"
-).addEventListener(
-  "click",
-  ()=>movePlayer(-1)
-);
-
-
-document.getElementById(
-  "rightBtn"
-).addEventListener(
-  "click",
-  ()=>movePlayer(1)
-);
-
-
-arena.addEventListener(
-  "pointerdown",
-  event=>{
-
-    if(!running) return;
-
-
-    const bounds =
-      arena.getBoundingClientRect();
-
-
-    if(
-      event.clientX <
-      bounds.left +
-      bounds.width/2
-    ){
-
-      movePlayer(-1);
-
-    }
-
-    else {
-
-      movePlayer(1);
-
-    }
-
-  }
-);
-
 
 document.getElementById(
   "soundBtn"
 ).addEventListener(
   "click",
-  event=>{
+  event => {
 
     soundEnabled =
       !soundEnabled;
@@ -984,18 +1698,63 @@ document.getElementById(
 );
 
 
+
+/* DESKTOP TESTING */
+
 document.addEventListener(
   "keydown",
-  event=>{
+  event => {
 
-    if(event.key === "ArrowLeft")
-      movePlayer(-1);
+    if(!running) {
+      return;
+    }
 
-    if(event.key === "ArrowRight")
-      movePlayer(1);
+
+    if(
+      event.key ===
+      "ArrowLeft"
+    ) {
+
+      playerX -=
+        0.07;
+
+    }
+
+
+    else if(
+      event.key ===
+      "ArrowRight"
+    ) {
+
+      playerX +=
+        0.07;
+
+    }
+
+
+    else {
+
+      return;
+
+    }
+
+
+    playerX =
+      Math.max(
+        0.065,
+        Math.min(
+          0.935,
+          playerX
+        )
+      );
+
+
+    player.style.left =
+      `calc(${playerX * 100}% - 27px)`;
 
   }
 );
+
 
 
 updateStats();
