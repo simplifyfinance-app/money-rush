@@ -36,19 +36,19 @@ body {
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
-  padding: 14px 12px 24px;
+  padding: 12px 10px 20px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .logo {
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .subtitle {
@@ -86,133 +86,108 @@ body {
 .label {
   color: #64748b;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .value {
-  font-size: 19px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 900;
   margin-top: 2px;
 }
 
-
-/* GAME AREA */
+/* GAME */
 
 #arena {
   height: 510px;
+  position: relative;
+  overflow: hidden;
 
   background:
     linear-gradient(
       #dff4ff 0%,
-      #eef9ff 62%,
-      #e9eef4 62%,
-      #d7dde5 100%
+      #eef9ff 61%,
+      #e5e9ef 61%,
+      #cdd4dd 100%
     );
 
   border: 1px solid #d6dee8;
   border-radius: 20px;
 
-  overflow: hidden;
-
-  position: relative;
-
-  /*
-  Critical for mobile gameplay:
-  finger gestures inside the arena belong to the game,
-  not browser scrolling/zooming.
-  */
   touch-action: none;
-
   user-select: none;
   -webkit-user-select: none;
 }
 
 .road-line {
   position: absolute;
-
   bottom: 0;
   left: 50%;
-
   width: 8px;
-  height: 190px;
-
+  height: 200px;
   opacity: .55;
 
   background:
     repeating-linear-gradient(
       to bottom,
       white 0,
-      white 24px,
-      transparent 24px,
-      transparent 48px
+      white 25px,
+      transparent 25px,
+      transparent 52px
     );
 }
 
-
-/* TAXI */
-
 #player {
   position: absolute;
-
   bottom: 16px;
+  left: calc(50% - 29px);
 
-  left: calc(50% - 27px);
-
-  width: 54px;
+  width: 58px;
 
   text-align: center;
+  font-size: 46px;
 
-  font-size: 44px;
+  z-index: 6;
 
-  z-index: 5;
-
-  user-select: none;
   pointer-events: none;
+  user-select: none;
 
-  will-change: left;
+  will-change: left, transform;
 }
-
-
-/* FALLING OBJECTS */
 
 .drop {
   position: absolute;
+  top: -55px;
 
-  top: -50px;
-
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  font-size: 32px;
+  font-size: 34px;
 
-  user-select: none;
   pointer-events: none;
+  user-select: none;
 
   will-change: transform;
 }
 
-
-/* START / END SCREEN */
+/* OVERLAYS */
 
 .overlay {
   position: absolute;
-
   inset: 0;
 
   background: rgba(248,250,252,.96);
 
-  z-index: 20;
+  z-index: 30;
 
   display: flex;
-
   justify-content: center;
   align-items: center;
 
-  padding: 28px;
+  padding: 26px;
 
   text-align: center;
 
@@ -225,106 +200,195 @@ body {
 
 .bigemoji {
   font-size: 58px;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 
 h1 {
   margin: 5px 0;
-  font-size: 27px;
+  font-size: 28px;
 }
 
 .instructions {
   color: #64748b;
-
   line-height: 1.5;
-
   font-size: 15px;
 }
 
 .primary {
   border: 0;
-
   background: #2563eb;
-
   color: white;
 
-  padding: 15px 27px;
+  padding: 15px 28px;
 
   border-radius: 14px;
 
-  font-weight: 800;
-
+  font-weight: 900;
   font-size: 17px;
 
   cursor: pointer;
 
-  min-width: 170px;
-
-  margin-top: 10px;
-
+  min-width: 175px;
   min-height: 52px;
+
+  margin-top: 9px;
 
   touch-action: manipulation;
 }
 
-
-/* SCORE POPUP */
+/* SCORE POP */
 
 #flash {
   position: absolute;
-
-  top: 80px;
-
+  top: 100px;
   left: 0;
   right: 0;
 
   text-align: center;
 
-  font-size: 27px;
+  font-size: 30px;
+  font-weight: 1000;
 
-  font-weight: 900;
-
-  z-index: 10;
+  z-index: 15;
 
   pointer-events: none;
+
+  text-shadow:
+    0 2px 4px rgba(255,255,255,.8);
 }
 
 .flashAnimation {
-  animation: pop .55s ease-out forwards;
+  animation: scorePop .65s ease-out forwards;
 }
 
-@keyframes pop {
+@keyframes scorePop {
 
   0% {
     opacity: 0;
-    transform: scale(.7);
+    transform: scale(.6);
   }
 
-  25% {
+  20% {
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.25);
   }
 
   100% {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-45px) scale(1);
   }
 
 }
 
+/* MONEY RUSH WARNING */
 
-/* DRAG INSTRUCTION */
+#rushBanner {
+  position: absolute;
+
+  top: 14px;
+  left: 50%;
+
+  transform: translateX(-50%) scale(.7);
+
+  z-index: 16;
+
+  background: #ef4444;
+  color: white;
+
+  border-radius: 20px;
+
+  padding: 9px 17px;
+
+  font-size: 17px;
+  font-weight: 1000;
+
+  white-space: nowrap;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.rushShow {
+  animation: rushPop 1.5s ease-out forwards;
+}
+
+@keyframes rushPop {
+
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(.5);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.15);
+  }
+
+  65% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(.95);
+  }
+
+}
+
+/* BOMB IMPACT */
+
+.shake {
+  animation: shake .35s linear;
+}
+
+@keyframes shake {
+
+  0% { transform: translateX(0); }
+  15% { transform: translateX(-10px) rotate(-7deg); }
+  30% { transform: translateX(9px) rotate(7deg); }
+  45% { transform: translateX(-8px) rotate(-5deg); }
+  60% { transform: translateX(7px) rotate(5deg); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+
+}
+
+#damageFlash {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(239,68,68,.28);
+
+  opacity: 0;
+
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+.damage {
+  animation: damageFlash .35s ease-out;
+}
+
+@keyframes damageFlash {
+
+  0% { opacity: .8; }
+  100% { opacity: 0; }
+
+}
+
+/* INSTRUCTIONS */
 
 .drag-tip {
   text-align: center;
-
-  margin-top: 10px;
+  margin-top: 9px;
 
   color: #475569;
 
   font-size: 14px;
-
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .drag-tip span {
@@ -339,17 +403,6 @@ h1 {
   padding: 7px 14px;
 }
 
-
-/* END SCREEN */
-
-.final-score {
-  font-size: 42px;
-
-  font-weight: 900;
-
-  margin: 10px 0;
-}
-
 .brand {
   text-align: center;
 
@@ -357,11 +410,14 @@ h1 {
 
   font-size: 12px;
 
-  margin-top: 12px;
+  margin-top: 11px;
 }
 
-
-/* SMALL PHONES */
+.final-score {
+  font-size: 43px;
+  font-weight: 1000;
+  margin: 9px 0;
+}
 
 @media (max-height: 720px) {
 
@@ -370,7 +426,7 @@ h1 {
   }
 
   .page {
-    padding-top: 8px;
+    padding-top: 7px;
   }
 
   .logo {
@@ -379,20 +435,15 @@ h1 {
 
 }
 
-
 @media (max-width: 380px) {
-
-  .page {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .logo {
-    font-size: 21px;
-  }
 
   #arena {
     height: 455px;
+  }
+
+  .page {
+    padding-left: 7px;
+    padding-right: 7px;
   }
 
 }
@@ -400,13 +451,9 @@ h1 {
 </style>
 </head>
 
-
 <body>
 
 <div class="page">
-
-
-  <!-- HEADER -->
 
   <div class="header">
 
@@ -417,11 +464,10 @@ h1 {
       </div>
 
       <div class="subtitle">
-        Catch the money. Dodge the bills.
+        Catch the money. Dodge the bills & bombs.
       </div>
 
     </div>
-
 
     <button
       id="soundBtn"
@@ -434,70 +480,44 @@ h1 {
   </div>
 
 
-
-  <!-- SCORE -->
-
   <div class="stats">
 
     <div class="stat">
-
-      <div class="label">
-        SCORE
-      </div>
-
-      <div id="score" class="value">
-        $0
-      </div>
-
+      <div class="label">SCORE</div>
+      <div id="score" class="value">$0</div>
     </div>
 
-
     <div class="stat">
-
-      <div class="label">
-        TIME
-      </div>
-
-      <div id="time" class="value">
-        60
-      </div>
-
+      <div class="label">TIME</div>
+      <div id="time" class="value">60</div>
     </div>
 
-
     <div class="stat">
-
-      <div class="label">
-        BEST
-      </div>
-
-      <div id="best" class="value">
-        $0
-      </div>
-
+      <div class="label">BEST</div>
+      <div id="best" class="value">$0</div>
     </div>
 
   </div>
 
 
-
-  <!-- GAME -->
-
   <div id="arena">
 
     <div class="road-line"></div>
 
+    <div id="damageFlash"></div>
+
+    <div id="rushBanner">
+      🔥 MONEY RUSH! 🔥
+    </div>
+
+    <div id="flash"></div>
 
     <div id="player">
       🚕
     </div>
 
 
-    <div id="flash"></div>
-
-
-
-    <!-- START -->
+    <!-- START SCREEN -->
 
     <div id="intro" class="overlay">
 
@@ -507,11 +527,9 @@ h1 {
           🚕💵
         </div>
 
-
         <h1>
           Got 60 seconds?
         </h1>
-
 
         <p class="instructions">
 
@@ -519,24 +537,29 @@ h1 {
           💵 💰 💎 🪙
           to earn money.
 
-          <br>
+          <br><br>
 
           Avoid
-          🧾 and 💸.
+          🧾 💸
+          and especially
+          <strong>💣 bombs!</strong>
+
+          <br>
+
+          💣 = <strong>-$500</strong>
 
           <br><br>
 
           <strong>
-            👆 Drag your finger left & right
+            👆 Drag anywhere on the road
             to steer the taxi.
           </strong>
 
           <br><br>
 
-          Things get faster as the clock runs down!
+          Things get faster as time runs out.
 
         </p>
-
 
         <button
           id="startBtn"
@@ -552,13 +575,11 @@ h1 {
     </div>
 
 
-
-    <!-- END -->
+    <!-- END SCREEN -->
 
     <div id="end" class="overlay hidden">
 
       <div>
-
 
         <div
           id="endEmoji"
@@ -568,13 +589,9 @@ h1 {
 
         </div>
 
-
         <h1 id="endTitle">
-
           Money Master!
-
         </h1>
-
 
         <div
           id="finalScore"
@@ -584,7 +601,6 @@ h1 {
 
         </div>
 
-
         <p
           id="endMessage"
           class="instructions">
@@ -592,7 +608,6 @@ h1 {
           Nice run!
 
         </p>
-
 
         <button
           id="againBtn"
@@ -603,20 +618,17 @@ h1 {
 
         </button>
 
-
       </div>
 
     </div>
 
-
   </div>
-
 
 
   <div class="drag-tip">
 
     <span>
-      👆 Drag anywhere on the road to steer
+      👆 Drag left & right to steer • 💣 = -$500
     </span>
 
   </div>
@@ -629,81 +641,75 @@ h1 {
 
   </div>
 
-
 </div>
-
 
 
 <script>
 
-/* ==============================
-   MONEY RUSH
-   ============================== */
+/* ===================================================
+   MONEY RUSH V3
+   =================================================== */
 
 
 const arena =
   document.getElementById("arena");
 
-
 const player =
   document.getElementById("player");
-
 
 const scoreDisplay =
   document.getElementById("score");
 
-
 const timeDisplay =
   document.getElementById("time");
-
 
 const bestDisplay =
   document.getElementById("best");
 
-
 const intro =
   document.getElementById("intro");
-
 
 const endScreen =
   document.getElementById("end");
 
-
 const flash =
   document.getElementById("flash");
 
+const rushBanner =
+  document.getElementById("rushBanner");
+
+const damageFlash =
+  document.getElementById("damageFlash");
 
 
 let score = 0;
-
 let timeLeft = 60;
 
 let running = false;
 
-
 let playerX = 0.5;
-
 
 let objects = [];
 
-
 let animationFrame = null;
-
 let timer = null;
 
-
 let lastFrame = 0;
-
 let lastSpawn = 0;
-
 
 let soundEnabled = true;
 
+let pointerActive = false;
 
-/*
-Best score remains on this passenger's
-phone/browser.
-*/
+let audioContext = null;
+
+let rushTriggered = false;
+
+
+/* ===================================================
+   BEST SCORE
+   =================================================== */
+
 
 let bestScore = 0;
 
@@ -711,9 +717,8 @@ try {
 
   bestScore =
     Number(
-      localStorage.getItem(
-        "moneyRushBest"
-      ) || 0
+      localStorage.getItem("moneyRushBest")
+      || 0
     );
 
 }
@@ -729,48 +734,56 @@ bestDisplay.textContent =
 
 
 
-/* OBJECT TYPES */
+/* ===================================================
+   NORMAL OBJECTS
+   =================================================== */
+
 
 const objectTypes = [
 
   {
     emoji: "💵",
     value: 100,
-    weight: 32
+    weight: 32,
+    type: "cash"
   },
 
   {
     emoji: "💰",
     value: 150,
-    weight: 24
+    weight: 24,
+    type: "cash"
   },
 
   {
     emoji: "🪙",
     value: 50,
-    weight: 20
+    weight: 20,
+    type: "coin"
   },
 
   {
     emoji: "💎",
     value: 300,
-    weight: 8
+    weight: 8,
+    type: "diamond"
   },
 
   {
     emoji: "🧾",
     value: -150,
-    weight: 10
+    weight: 10,
+    type: "bad"
   },
 
   {
     emoji: "💸",
     value: -250,
-    weight: 6
+    weight: 6,
+    type: "bad"
   }
 
 ];
-
 
 
 function chooseObject() {
@@ -778,22 +791,14 @@ function chooseObject() {
   let random =
     Math.random() * 100;
 
-
   let total = 0;
 
 
-  for(
-    const item
-    of objectTypes
-  ) {
+  for(const item of objectTypes) {
 
-    total +=
-      item.weight;
+    total += item.weight;
 
-
-    if(
-      random < total
-    ) {
+    if(random < total) {
 
       return item;
 
@@ -808,13 +813,81 @@ function chooseObject() {
 
 
 
+/* ===================================================
+   7 BOMBS
+   =================================================== */
+
+
+/*
+Each game gets exactly seven scheduled bomb drops.
+
+Bombs do not appear during the first few seconds,
+giving the player time to learn the controls.
+*/
+
+
+let bombSchedule = [];
+let bombsReleased = 0;
+
+
+function createBombSchedule() {
+
+  bombSchedule = [];
+
+  bombsReleased = 0;
+
+
+  /*
+  Spread 7 bombs across approximately
+  seconds 7 through 56.
+  */
+
+  const sections = [
+
+    [7, 13],
+    [14, 20],
+    [21, 27],
+    [28, 34],
+    [35, 41],
+    [42, 49],
+    [50, 56]
+
+  ];
+
+
+  for(const section of sections) {
+
+    const second =
+      section[0]
+      +
+      Math.random()
+      *
+      (
+        section[1]
+        -
+        section[0]
+      );
+
+
+    bombSchedule.push(second);
+
+  }
+
+}
+
+
+
+/* ===================================================
+   MONEY FORMAT
+   =================================================== */
+
+
 function formatMoney(value) {
 
   if(value < 0) {
 
     return "-$" +
-      Math.abs(value)
-        .toLocaleString();
+      Math.abs(value).toLocaleString();
 
   }
 
@@ -825,16 +898,13 @@ function formatMoney(value) {
 }
 
 
-
 function updateStats() {
 
   scoreDisplay.textContent =
     formatMoney(score);
 
-
   timeDisplay.textContent =
     timeLeft;
-
 
   bestDisplay.textContent =
     formatMoney(bestScore);
@@ -843,16 +913,272 @@ function updateStats() {
 
 
 
-/* ==============================
-   TOUCH STEERING
-   ============================== */
+/* ===================================================
+   AUDIO
+   =================================================== */
+
+
+function getAudioContext() {
+
+  if(!audioContext) {
+
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    if(AudioContext) {
+
+      audioContext =
+        new AudioContext();
+
+    }
+
+  }
+
+
+  if(
+    audioContext &&
+    audioContext.state === "suspended"
+  ) {
+
+    audioContext.resume();
+
+  }
+
+
+  return audioContext;
+
+}
+
+
+
+function tone(
+  frequency,
+  start,
+  duration,
+  volume,
+  type = "sine"
+) {
+
+  if(!soundEnabled) {
+    return;
+  }
+
+
+  const context =
+    getAudioContext();
+
+
+  if(!context) {
+    return;
+  }
+
+
+  const oscillator =
+    context.createOscillator();
+
+
+  const gain =
+    context.createGain();
+
+
+  oscillator.type =
+    type;
+
+
+  oscillator.frequency.setValueAtTime(
+    frequency,
+    context.currentTime + start
+  );
+
+
+  gain.gain.setValueAtTime(
+    0.0001,
+    context.currentTime + start
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    volume,
+    context.currentTime + start + 0.01
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001,
+    context.currentTime + start + duration
+  );
+
+
+  oscillator.connect(gain);
+
+  gain.connect(
+    context.destination
+  );
+
+
+  oscillator.start(
+    context.currentTime + start
+  );
+
+
+  oscillator.stop(
+    context.currentTime +
+    start +
+    duration +
+    0.03
+  );
+
+}
+
 
 
 /*
-Convert the passenger's finger
-position to a position between
-0 and 1 across the game.
+Original arcade-style "cha-ching".
+
+This is synthesized by the browser,
+so no copyrighted game audio file is used.
 */
+
+function cashSound() {
+
+  tone(
+    660,
+    0,
+    .08,
+    .06,
+    "square"
+  );
+
+  tone(
+    880,
+    .07,
+    .10,
+    .065,
+    "square"
+  );
+
+  tone(
+    1100,
+    .14,
+    .12,
+    .055,
+    "sine"
+  );
+
+}
+
+
+function coinSound() {
+
+  tone(
+    850,
+    0,
+    .06,
+    .05,
+    "square"
+  );
+
+  tone(
+    1150,
+    .055,
+    .08,
+    .05,
+    "square"
+  );
+
+}
+
+
+function diamondSound() {
+
+  tone(
+    700,
+    0,
+    .08,
+    .055
+  );
+
+  tone(
+    1000,
+    .07,
+    .10,
+    .06
+  );
+
+  tone(
+    1350,
+    .15,
+    .14,
+    .065
+  );
+
+  tone(
+    1700,
+    .25,
+    .18,
+    .05
+  );
+
+}
+
+
+function badSound() {
+
+  tone(
+    230,
+    0,
+    .14,
+    .055,
+    "sawtooth"
+  );
+
+  tone(
+    170,
+    .10,
+    .17,
+    .05,
+    "sawtooth"
+  );
+
+}
+
+
+function bombSound() {
+
+  tone(
+    120,
+    0,
+    .16,
+    .08,
+    "sawtooth"
+  );
+
+  tone(
+    75,
+    .07,
+    .27,
+    .075,
+    "square"
+  );
+
+  tone(
+    48,
+    .12,
+    .35,
+    .06,
+    "sawtooth"
+  );
+
+}
+
+
+
+/* ===================================================
+   TOUCH STEERING
+   =================================================== */
+
 
 function steerTo(clientX) {
 
@@ -874,11 +1200,6 @@ function steerTo(clientX) {
     bounds.width;
 
 
-  /*
-  Keep taxi away from
-  extreme edges.
-  */
-
   position =
     Math.max(
       0.065,
@@ -894,25 +1215,10 @@ function steerTo(clientX) {
 
 
   player.style.left =
-    `calc(${playerX * 100}% - 27px)`;
+    `calc(${playerX * 100}% - 29px)`;
 
 }
 
-
-
-/*
-Pointer Events work with:
-
-- fingers
-- stylus
-- mouse
-
-so we don't need separate
-touch and mouse code.
-*/
-
-
-let pointerActive = false;
 
 
 arena.addEventListener(
@@ -957,9 +1263,7 @@ arena.addEventListener(
       !running ||
       !pointerActive
     ) {
-
       return;
-
     }
 
 
@@ -975,7 +1279,7 @@ arena.addEventListener(
 
 
 
-function endPointer(event) {
+function stopPointer(event) {
 
   pointerActive = false;
 
@@ -994,26 +1298,118 @@ function endPointer(event) {
 
 arena.addEventListener(
   "pointerup",
-  endPointer
+  stopPointer
 );
 
 
 arena.addEventListener(
   "pointercancel",
-  endPointer
+  stopPointer
 );
 
 
 
-/* ==============================
-   FALLING OBJECTS
-   ============================== */
+/* ===================================================
+   DIFFICULTY
+   =================================================== */
 
 
-function createObject() {
+/*
+elapsed:
 
-  const type =
-    chooseObject();
+0  = beginning
+60 = end
+
+Falling objects get significantly faster
+throughout the game.
+*/
+
+
+function getSpeed() {
+
+  const elapsed =
+    60 - timeLeft;
+
+
+  /*
+  Base speed approximately 135 px/sec.
+
+  By the final seconds, this adds
+  roughly another 160 px/sec.
+  */
+
+
+  return (
+    135
+    +
+    elapsed * 2.65
+    +
+    Math.random() * 35
+  );
+
+}
+
+
+
+/*
+Spawn intervals also become shorter.
+
+Beginning: ~850ms
+Final stage: ~330ms
+*/
+
+
+function getSpawnRate() {
+
+  const elapsed =
+    60 - timeLeft;
+
+
+  return Math.max(
+
+    330,
+
+    850 -
+    elapsed * 8.7
+
+  );
+
+}
+
+
+
+/* ===================================================
+   CREATE OBJECTS
+   =================================================== */
+
+
+function createObject(
+  forcedType = null
+) {
+
+  let type;
+
+
+  if(
+    forcedType === "bomb"
+  ) {
+
+    type = {
+
+      emoji: "💣",
+      value: -500,
+      type: "bomb"
+
+    };
+
+  }
+
+  else {
+
+    type =
+      chooseObject();
+
+  }
 
 
   const element =
@@ -1028,13 +1424,28 @@ function createObject() {
     type.emoji;
 
 
+  /*
+  Bomb is slightly larger
+  so it is clearly visible.
+  */
+
+  if(
+    type.type === "bomb"
+  ) {
+
+    element.style.fontSize =
+      "39px";
+
+  }
+
+
   const x =
     0.06 +
-    Math.random() * 0.88;
+    Math.random() * .88;
 
 
   element.style.left =
-    `calc(${x * 100}% - 23px)`;
+    `calc(${x * 100}% - 24px)`;
 
 
   arena.appendChild(
@@ -1048,14 +1459,20 @@ function createObject() {
 
     x: x,
 
-    y: -50,
+    y: -55,
 
     value: type.value,
 
+    type: type.type,
+
     speed:
-      125 +
-      Math.random() * 55 +
-      (60 - timeLeft) * 2.2
+      getSpeed()
+      +
+      (
+        type.type === "bomb"
+        ? 15
+        : 0
+      )
 
   });
 
@@ -1063,80 +1480,105 @@ function createObject() {
 
 
 
-/* ==============================
-   SOUND
-   ============================== */
+/* ===================================================
+   SCORE EFFECT
+   =================================================== */
 
 
-function playSound(good) {
+function showScoreFlash(
+  value,
+  type
+) {
 
-  if(!soundEnabled) {
-    return;
+  if(type === "bomb") {
+
+    flash.textContent =
+      "💥 -$500!";
+
+  }
+
+  else {
+
+    flash.textContent =
+      (
+        value > 0
+        ? "+"
+        : ""
+      )
+      +
+      formatMoney(value);
+
   }
 
 
-  try {
-
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
+  flash.classList.remove(
+    "flashAnimation"
+  );
 
 
-    if(!AudioContext) {
-      return;
-    }
+  void flash.offsetWidth;
 
 
-    const context =
-      new AudioContext();
-
-
-    const oscillator =
-      context.createOscillator();
-
-
-    const gain =
-      context.createGain();
-
-
-    oscillator.connect(
-      gain
-    );
-
-
-    gain.connect(
-      context.destination
-    );
-
-
-    oscillator.frequency.value =
-      good
-      ? 650
-      : 180;
-
-
-    gain.gain.value =
-      0.04;
-
-
-    oscillator.start();
-
-
-    oscillator.stop(
-      context.currentTime +
-      0.07
-    );
-
-  }
-  catch(e) {}
+  flash.classList.add(
+    "flashAnimation"
+  );
 
 }
 
 
 
-/* ==============================
-   COLLECTION
-   ============================== */
+/* ===================================================
+   BOMB EFFECT
+   =================================================== */
+
+
+function bombImpact() {
+
+  player.classList.remove(
+    "shake"
+  );
+
+
+  damageFlash.classList.remove(
+    "damage"
+  );
+
+
+  void player.offsetWidth;
+
+
+  player.classList.add(
+    "shake"
+  );
+
+
+  damageFlash.classList.add(
+    "damage"
+  );
+
+
+  setTimeout(
+    () => {
+
+      player.classList.remove(
+        "shake"
+      );
+
+      damageFlash.classList.remove(
+        "damage"
+      );
+
+    },
+    400
+  );
+
+}
+
+
+
+/* ===================================================
+   COLLECT
+   =================================================== */
 
 
 function collect(object) {
@@ -1144,6 +1586,10 @@ function collect(object) {
   score +=
     object.value;
 
+
+  /*
+  Score cannot go below zero.
+  */
 
   if(score < 0) {
 
@@ -1174,34 +1620,55 @@ function collect(object) {
   }
 
 
-  flash.textContent =
-    (
-      object.value > 0
-      ? "+"
-      : ""
-    )
-    +
-    formatMoney(
-      object.value
-    );
-
-
-  flash.classList.remove(
-    "flashAnimation"
+  showScoreFlash(
+    object.value,
+    object.type
   );
 
 
-  void flash.offsetWidth;
+  /*
+  Sound based on item.
+  */
 
+  if(
+    object.type === "bomb"
+  ) {
 
-  flash.classList.add(
-    "flashAnimation"
-  );
+    bombSound();
 
+    bombImpact();
 
-  playSound(
-    object.value > 0
-  );
+  }
+
+  else if(
+    object.type === "diamond"
+  ) {
+
+    diamondSound();
+
+  }
+
+  else if(
+    object.type === "cash"
+  ) {
+
+    cashSound();
+
+  }
+
+  else if(
+    object.type === "coin"
+  ) {
+
+    coinSound();
+
+  }
+
+  else {
+
+    badSound();
+
+  }
 
 
   object.element.remove();
@@ -1220,9 +1687,69 @@ function collect(object) {
 
 
 
-/* ==============================
+/* ===================================================
+   MONEY RUSH
+   =================================================== */
+
+
+function triggerMoneyRush() {
+
+  if(rushTriggered) {
+    return;
+  }
+
+
+  rushTriggered = true;
+
+
+  rushBanner.classList.remove(
+    "rushShow"
+  );
+
+
+  void rushBanner.offsetWidth;
+
+
+  rushBanner.classList.add(
+    "rushShow"
+  );
+
+
+  /*
+  Quick alert sound.
+  */
+
+  tone(
+    500,
+    0,
+    .10,
+    .05,
+    "square"
+  );
+
+  tone(
+    700,
+    .10,
+    .10,
+    .05,
+    "square"
+  );
+
+  tone(
+    900,
+    .20,
+    .15,
+    .055,
+    "square"
+  );
+
+}
+
+
+
+/* ===================================================
    GAME LOOP
-   ============================== */
+   =================================================== */
 
 
 function gameLoop(timestamp) {
@@ -1235,7 +1762,7 @@ function gameLoop(timestamp) {
   const delta =
     Math.min(
 
-      0.032,
+      .032,
 
       (
         timestamp -
@@ -1255,30 +1782,17 @@ function gameLoop(timestamp) {
 
 
   /*
-  Objects spawn faster
-  later in the game.
+  NORMAL OBJECT SPAWNING
   */
-
-  const spawnRate =
-    Math.max(
-
-      320,
-
-      850 -
-      (60 - timeLeft) * 8
-
-    );
-
 
 
   if(
     timestamp -
     lastSpawn >
-    spawnRate
+    getSpawnRate()
   ) {
 
     createObject();
-
 
     lastSpawn =
       timestamp;
@@ -1287,9 +1801,40 @@ function gameLoop(timestamp) {
 
 
 
+  /*
+  BOMB SCHEDULE
+
+  elapsed seconds determine
+  when scheduled bombs appear.
+  */
+
+
+  const elapsed =
+    60 - timeLeft;
+
+
+  while(
+
+    bombsReleased <
+    bombSchedule.length
+
+    &&
+
+    elapsed >=
+    bombSchedule[bombsReleased]
+
+  ) {
+
+    createObject("bomb");
+
+    bombsReleased++;
+
+  }
+
+
+
   const arenaHeight =
     arena.clientHeight;
-
 
 
   for(
@@ -1309,17 +1854,17 @@ function gameLoop(timestamp) {
 
 
     const playerY =
-      arenaHeight - 80;
+      arenaHeight - 82;
 
 
 
     /*
-    Collision detection
+    COLLISION
     */
 
     if(
 
-      object.y + 40 >
+      object.y + 42 >
       playerY
 
       &&
@@ -1334,14 +1879,11 @@ function gameLoop(timestamp) {
         playerX
       )
       <
-      0.105
+      .10
 
     ) {
 
-      collect(
-        object
-      );
-
+      collect(object);
 
       continue;
 
@@ -1350,13 +1892,12 @@ function gameLoop(timestamp) {
 
 
     /*
-    Remove objects once
-    they leave the screen.
+    REMOVE MISSED OBJECT
     */
 
     if(
       object.y >
-      arenaHeight + 30
+      arenaHeight + 40
     ) {
 
       object.element.remove();
@@ -1373,7 +1914,6 @@ function gameLoop(timestamp) {
   }
 
 
-
   animationFrame =
     requestAnimationFrame(
       gameLoop
@@ -1383,9 +1923,9 @@ function gameLoop(timestamp) {
 
 
 
-/* ==============================
-   START / STOP
-   ============================== */
+/* ===================================================
+   CLEAR GAME
+   =================================================== */
 
 
 function clearGame() {
@@ -1405,9 +1945,7 @@ function clearGame() {
 
   if(timer !== null) {
 
-    clearInterval(
-      timer
-    );
+    clearInterval(timer);
 
     timer = null;
 
@@ -1422,8 +1960,7 @@ function clearGame() {
       animationFrame
     );
 
-    animationFrame =
-      null;
+    animationFrame = null;
 
   }
 
@@ -1431,26 +1968,43 @@ function clearGame() {
 
 
 
+/* ===================================================
+   START GAME
+   =================================================== */
+
+
 function startGame() {
 
   clearGame();
 
 
-  score = 0;
+  /*
+  Initialize audio from a real
+  user interaction so mobile
+  browsers permit sound.
+  */
 
+  getAudioContext();
+
+
+  score = 0;
 
   timeLeft = 60;
 
+  playerX = .5;
 
-  playerX = 0.5;
+  pointerActive = false;
 
-
-  pointerActive =
-    false;
+  rushTriggered = false;
 
 
   player.style.left =
-    "calc(50% - 27px)";
+    "calc(50% - 29px)";
+
+
+  player.classList.remove(
+    "shake"
+  );
 
 
   intro.classList.add(
@@ -1463,8 +2017,10 @@ function startGame() {
   );
 
 
-  running =
-    true;
+  createBombSchedule();
+
+
+  running = true;
 
 
   lastFrame =
@@ -1484,6 +2040,19 @@ function startGame() {
       () => {
 
         timeLeft--;
+
+
+        /*
+        Final 15 seconds.
+        */
+
+        if(
+          timeLeft === 15
+        ) {
+
+          triggerMoneyRush();
+
+        }
 
 
         updateStats();
@@ -1512,6 +2081,11 @@ function startGame() {
 
 
 
+/* ===================================================
+   FINISH GAME
+   =================================================== */
+
+
 function finishGame() {
 
   if(!running) {
@@ -1519,8 +2093,7 @@ function finishGame() {
   }
 
 
-  running =
-    false;
+  running = false;
 
 
   clearGame();
@@ -1553,19 +2126,15 @@ function finishGame() {
   document.getElementById(
     "finalScore"
   ).textContent =
-    formatMoney(
-      score
-    );
+    formatMoney(score);
 
 
 
   let title =
     "Nice Run!";
 
-
   let emoji =
     "👏";
-
 
   let message =
     "Try again and beat your score!";
@@ -1579,13 +2148,11 @@ function finishGame() {
     title =
       "Money Master!";
 
-
     emoji =
       "🏆";
 
-
     message =
-      "That was seriously fast!";
+      "You broke $5,000! Can you do it again?";
 
   }
 
@@ -1597,13 +2164,11 @@ function finishGame() {
     title =
       "Cash Collector!";
 
-
     emoji =
       "💰";
 
-
     message =
-      "Can you break $5,000?";
+      "So close — can you break $5,000?";
 
   }
 
@@ -1615,10 +2180,8 @@ function finishGame() {
     title =
       "Smart Saver!";
 
-
     emoji =
       "😎";
-
 
     message =
       "Nice! Go again for a bigger score.";
@@ -1656,9 +2219,9 @@ function finishGame() {
 
 
 
-/* ==============================
+/* ===================================================
    BUTTONS
-   ============================== */
+   =================================================== */
 
 
 document.getElementById(
@@ -1669,14 +2232,12 @@ document.getElementById(
 );
 
 
-
 document.getElementById(
   "againBtn"
 ).addEventListener(
   "click",
   startGame
 );
-
 
 
 document.getElementById(
@@ -1699,7 +2260,10 @@ document.getElementById(
 
 
 
-/* DESKTOP TESTING */
+/* ===================================================
+   KEYBOARD SUPPORT FOR DESKTOP TESTING
+   =================================================== */
+
 
 document.addEventListener(
   "keydown",
@@ -1711,26 +2275,20 @@ document.addEventListener(
 
 
     if(
-      event.key ===
-      "ArrowLeft"
+      event.key === "ArrowLeft"
     ) {
 
-      playerX -=
-        0.07;
+      playerX -= .07;
 
     }
-
 
     else if(
-      event.key ===
-      "ArrowRight"
+      event.key === "ArrowRight"
     ) {
 
-      playerX +=
-        0.07;
+      playerX += .07;
 
     }
-
 
     else {
 
@@ -1741,20 +2299,19 @@ document.addEventListener(
 
     playerX =
       Math.max(
-        0.065,
+        .065,
         Math.min(
-          0.935,
+          .935,
           playerX
         )
       );
 
 
     player.style.left =
-      `calc(${playerX * 100}% - 27px)`;
+      `calc(${playerX * 100}% - 29px)`;
 
   }
 );
-
 
 
 updateStats();
